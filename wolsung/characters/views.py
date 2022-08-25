@@ -6,12 +6,14 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-
-
-def index2(request):
-    return HttpResponse("Test.")
+@api_view(['GET', 'POST'])
+def add_character(request):
+    if request.method == "POST":
+        serializer = CharacterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
