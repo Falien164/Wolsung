@@ -8,27 +8,14 @@ import os
 
 from pathlib import Path
 
-from utils.logging import Logger
+from utils.logging import Logging
 
-# logger = logging.getLogger(__name__)
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'root': {
-#         'handlers': ['console'],
-#         'level': 'WARNING',
-#     },
-# }
-logger = Logger()
+logger = Logging()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env_path = os.path.join(os.getcwd(), "..", "_config", ".env")
+env_path = os.path.join(os.getcwd(), "_config", ".env")
 if os.path.exists(env_path):
     environ.Env().read_env(env_path)
     logger.info(".env found and loaded")

@@ -1,24 +1,22 @@
 import logging
+import os
 
-class Logger:
+
+class Logging:
     def __init__(self):
         log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(funcName)s(%(lineno)d) %(message)s',
-                                          datefmt='%d/%m/%Y %H:%M:%S')
-        logFile = '.log'
+                                          datefmt='%Y-%m-%d %H:%M:%S')
 
-        # Setup File handler
-        file_handler = logging.FileHandler(logFile)
+        log_file = os.path.join(os.getcwd(), "_logs", ".log")
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+
+        file_handler = logging.FileHandler(log_file)
         file_handler.setFormatter(log_formatter)
-
-        # Setup Stream Handler (i.e. console)
         stream_handler = logging.StreamHandler()
         stream_handler.setFormatter(log_formatter)
-
-        # Add both Handlers
-        self.app_log = logging.getLogger('root')
-        self.app_log.addHandler(file_handler)
+        self.app_log = logging.getLogger()
         self.app_log.addHandler(stream_handler)
-        # Get our logger
+        self.app_log.addHandler(file_handler)
 
     def info(self, message):
         self.app_log.setLevel(logging.INFO)
@@ -30,4 +28,8 @@ class Logger:
 
     def warning(self, message):
         self.app_log.setLevel(logging.WARNING)
+        self.app_log.warning(message)
+
+    def error(self, message):
+        self.app_log.setLevel(logging.ERROR)
         self.app_log.warning(message)
