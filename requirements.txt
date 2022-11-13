@@ -1,5 +1,6 @@
 django
 djangorestframework
+django-allauth
 drf-yasg
 environ
 psycopg2
